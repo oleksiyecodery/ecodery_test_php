@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return 'Hello World';
+    return redirect('spa.html');
 });
+
+Route::get('imdbtop/{page?}', 'ImdbController@showTop');
