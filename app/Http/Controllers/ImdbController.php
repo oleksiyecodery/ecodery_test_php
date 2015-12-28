@@ -16,6 +16,10 @@ class ImdbController extends Controller
         $movies = $data['data']['list']['list'];
 
         $perPage = env('IMDB_PER_PAGE');
-        return response()->json(array_slice($movies, $page * $perPage, $perPage));
+        return response()->json([
+            'page' => $page,
+            'maxPage' => ceil(count($movies) / $perPage),
+            'movies' => array_slice($movies, $page * $perPage, $perPage),
+        ]);
     }
 }
