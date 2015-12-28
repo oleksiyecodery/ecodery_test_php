@@ -1,0 +1,12 @@
+/** { padding: 0; margin: 0; }*/
+
+body {
+    background: url("../bg1.jpg") no-repeat fixed;
+    -moz-background-size: 100%;
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+}
+
+div.movie { border: 1px solid #337ab7; margin-bottom: 4px;}
+div.movie img { margin: 2px }

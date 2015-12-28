@@ -1,99 +1,57 @@
 <html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">
+</head>
+
 <body>
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/handlebars-latest.js"></script>
+<script src="js/custom.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
 
-<style>
-    * { margin: 0; padding: 0; }
-    .movies-list > li { border: 1px solid black }
-</style>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
 
-<script>
-    $(function () {
-        var dataUrl = "imdbtop/";
-        var moviesDiv = $('.all-movies .movies-list');
-        var paginationDiv = $('.all-movies .pagination');
+            <div class="main-content">
+                <div class="all-movies page ">
+                    <ul class="pagination">
+                    </ul>
 
-        function loadPosts(data) {
-            moviesDiv.empty();
-            var source = $("#movies-template").html();
-            var template = Handlebars.compile(source);
-            moviesDiv.append(template(data.movies));
+                    <div class="movies-list center-block text-center">
+                    </div>
 
-            paginationDiv.empty();
-            source = $("#pagination-template").html();
-            template = Handlebars.compile(source);
-            paginationDiv.append(template({
-                'isPrev': +data.page - 1 >= 0,
-                'isNext': +data.page + 1 <= +data.maxPage,
-                'prev': +data.page - 1,
-                'next': +data.page + 1
-            }));
-        }
+                    <ul class="pagination">
+                    </ul>
+                </div>
+            </div>
 
-        function render(url) {
-            var temp = url.split("/")[0];
-
-            if (temp === "#page") {
-                var index = url.split("#page/")[1].trim();
-
-                $.ajax({
-                    dataType: "json",
-                    url: dataUrl + index,
-                    success: function (json) {
-                        loadPosts(json);
-                    }
-                });
-            } else {
-                $.ajax({
-                    dataType: "json",
-                    url: dataUrl,
-                    success: function (json) {
-                        loadPosts(json);
-                    }
-                });
-            }
-        }
-
-        $(window).on("hashchange", function () {
-            render(window.location.hash);
-        });
-
-        $(window).trigger("hashchange");
-    });
-
-</script>
-
-<div class="main-content">
-    <div class="all-movies page">
-        <ul class="pagination">
-        </ul>
-
-        <ul class="movies-list">
-        </ul>
+        </div>
     </div>
 </div>
 
+
+
 <script id="movies-template" type="x-handlebars-template">​
 {{#each this}}
-<li data-index="{{id}}">
-    <!--<img src="{{image.url}}" height="130" alt="{{title}}"/>-->
-    <p><a href="#"> {{title}} </a></p>
-    <!--<ul class="movie-description">
-        <li><span>num_votes: </span>{{num_votes}}</li>
-        <li><span>rating: </span>{{rating}}</li>
-        <li><span>year: </span>{{year}}</li>
-    </ul>-->
-</li>
+<div class="movie" data-index="{{id}}">
+    <div class="row">
+        <p class="col-md-7">{{title}} ({{year}})</p>
+        <div class="col-md-5">
+            <p><span>rating: </span>{{rating}}</p>
+            <p><span>num_votes: </span>{{num_votes}}</p>
+        </div>
+    </div>
+</div>
 {{/each}}
 </script>
  
 
 <script id="pagination-template" type="text/x-handlebars-template">
-    {{#if isPrev}}
-    <li class="pagination-prev"><a href="#page/{{prev}}">&laquo;</a></li>{{/if}}
-    {{#if isNext}}
-    <li class="pagination-next"><a href="#page/{{next}}">&raquo;</a></li>{{/if}}
+    {{#if isPrev}}<li class="pagination-prev"><a href="#page/{{prev}}">&laquo; Prev</a></li>{{/if}}
+    {{#if isNext}}<li class="pagination-next"><a href="#page/{{next}}">Next &raquo;</a></li>{{/if}}
 </script>
 
 </body>
